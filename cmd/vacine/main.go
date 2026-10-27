@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "png"})
+	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
 		panic(errListFiles)
 	}

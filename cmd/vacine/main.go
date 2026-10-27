@@ -3,18 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
-	"ransomware/decript"
-	"ransomware/utils"
+	"ransomware/comunUtils"
+	"ransomware/vacineUtils"
 )
 
 func main() {
-	files, errListFiles := utils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
+	files, errListFiles := ransomUtils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
 		panic(errListFiles)
 	}
 	fmt.Println("Descifrando los siguientes archivos:")
 	for _, file := range files {
-		errDecrypt := decript.DecryptFile(file)
+		errDecrypt := vacineUtils.DecryptFile(file)
 		if errDecrypt != nil {
 			fmt.Fprintf(os.Stderr, "Error desencriptando %s: %v\n", file, errDecrypt)
 		}

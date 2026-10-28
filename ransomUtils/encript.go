@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-const key = "clave"
+
 
 // toDo: deriveKey convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
 func deriveKey(password string) []byte {
@@ -18,7 +18,7 @@ func deriveKey(password string) []byte {
 }
 
 func Encrypt(plaintext string, pKey string) (string, error) {
-	block, err := aes.NewCipher(deriveKey(key))
+	block, err := aes.NewCipher(deriveKey(pkey))
 	if err != nil {
 		return "", err
 	}

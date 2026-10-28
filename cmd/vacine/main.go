@@ -7,6 +7,8 @@ import (
 	"ransomware/vacineUtils"
 )
 
+const key = "clave"
+
 func main() {
 	files, errListFiles := ransomUtils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
@@ -14,7 +16,7 @@ func main() {
 	}
 	fmt.Println("Descifrando los siguientes archivos:")
 	for _, file := range files {
-		errDecrypt := vacineUtils.DecryptFile(file)
+		errDecrypt := vacineUtils.DecryptFile(file,key)
 		if errDecrypt != nil {
 			fmt.Fprintf(os.Stderr, "Error desencriptando %s: %v\n", file, errDecrypt)
 		}

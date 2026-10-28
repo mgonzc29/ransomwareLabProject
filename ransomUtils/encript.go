@@ -9,16 +9,14 @@ import (
 	"os"
 )
 
-
-
 // toDo: deriveKey convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
 func deriveKey(password string) []byte {
 	hash := sha256.Sum256([]byte(password))
 	return hash[:]
 }
 
-func Encrypt(plaintext string, pKey string) (string, error) {
-	block, err := aes.NewCipher(deriveKey(pkey))
+func Encrypt(plaintext string, key string) (string, error) {
+	block, err := aes.NewCipher(deriveKey(key))
 	if err != nil {
 		return "", err
 	}
@@ -38,13 +36,13 @@ func Encrypt(plaintext string, pKey string) (string, error) {
 	return base64.StdEncoding.EncodeToString(out), nil
 }
 
-func EncryptFile(path string, pKey string) error {
+func EncryptFile(path string, key string) error {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return fmt.Errorf("error al leer el archivo: %w", err)
 	}
 
-	encrypted, err := Encrypt(string(data), pKey)
+	encrypted, err := Encrypt(string(data), key)
 	if err != nil {
 		return fmt.Errorf("error al cifrar: %w", err)
 	}

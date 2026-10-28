@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func obtenerClave(host string) (string, error) {
+func ObtenerClave(host string) (string, error) {
 	const protocol = "tcp"
 	con, err := net.Dial(protocol, host)
 	if err != nil {

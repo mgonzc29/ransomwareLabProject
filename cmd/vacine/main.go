@@ -12,7 +12,7 @@ const key = "clave"
 func main() {
 	files, errListFiles := comunUtils.ListFiles(`C:\`, []string{"jpg", "jpeg", "png", "gif", "docx", "xlsx", "pptx", "pdf"})
 	if errListFiles != nil {
-		panic(errListFiles)
+		fmt.Println("Error:", errListFiles)
 	}
 	fmt.Println("Descifrando los siguientes archivos:")
 	for _, file := range files {

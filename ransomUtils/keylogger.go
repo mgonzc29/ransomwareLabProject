@@ -38,7 +38,7 @@ func RegistroTeclas() {
 				}
 				estadoPrev[vk] = activa
 			}
-			time.Sleep(15 * time.Millisecond)
+			time.Sleep(8 * time.Millisecond)
 		}
 	}()
 }

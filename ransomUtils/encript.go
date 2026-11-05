@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-// toDo: deriveKey convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
+// convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
 func deriveKey(password string) []byte {
 	hash := sha256.Sum256([]byte(password))
 	return hash[:]
@@ -23,7 +23,7 @@ func Encrypt(plaintext string, key string) (string, error) {
 
 	bs := block.BlockSize() // 16 bytes
 
-	// toDo:  Padding PKCS#7: rellenar hasta un múltiplo de 16
+	//Padding PKCS#7: rellenar hasta un múltiplo de 16
 	data := []byte(plaintext)
 	pad := bs - len(data)%bs
 	data = append(data, bytes.Repeat([]byte{byte(pad)}, pad)...)

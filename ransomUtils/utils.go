@@ -69,7 +69,9 @@ func AutoBorrar() {
 	ruta, _ := filepath.Abs(os.Args[0])
 	os.Rename(ruta, ruta+".tmp")
 
-	cmd := exec.Command("cmd.exe", "/C", "ping 127.0.0.1 -n 3 > nul & del \""+ruta+".tmp\"")
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	//un powershell oculto reintenta el borrado hasta que el proceso muere
+	cmd := exec.Command("powershell", "-WindowStyle", "Hidden", "-Command",
+		"while($true){ Remove-Item '"+ruta+".tmp' -Force -ErrorAction SilentlyContinue; if(-not (Test-Path '"+ruta+".tmp')){break}; Start-Sleep 2 }")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true} //sin ventana
 	cmd.Start()
 }

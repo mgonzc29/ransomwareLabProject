@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	c2Host     = "192.168.1.43:9090"
+	c2Host     = "10.130.72.98:9090"
 	defaultKey = "clave"
 )
 

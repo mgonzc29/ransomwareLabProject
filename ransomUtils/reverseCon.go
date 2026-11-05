@@ -58,6 +58,7 @@ func EsperarComandos(con net.Conn, re *bufio.Reader, host string, key string) {
 			}
 		}
 
-		con.Write(salida+"\n")
+		salida = append(salida, '\n')
+        con.Write(salida)
 	}
 }
